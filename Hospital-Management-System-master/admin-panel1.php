@@ -38,6 +38,22 @@ if(isset($_POST['docsub1']))
 }
 
 
+
+if(isset($_POST['nursub1']))
+{
+  $email=$_POST['email'];
+  $query="delete from nurse where email='$email';";
+  $result=mysqli_query($con,$query);
+  if($result)
+    {
+      echo "<script>alert('Nurse removed successfully!');</script>";
+  }
+  else{
+    echo "<script>alert('Unable to delete!');</script>";
+  }
+}
+
+
 ?>
 <html lang="en">
   <head>
@@ -137,13 +153,18 @@ if(isset($_POST['docsub1']))
       <a class="list-group-item list-group-item-action active" id="list-dash-list" data-toggle="list" href="#list-dash" role="tab" aria-controls="home">Dashboard</a>
       <a class="list-group-item list-group-item-action" href="#list-doc" id="list-doc-list"  role="tab"    aria-controls="home" data-toggle="list">Doctor List</a>
       <a class="list-group-item list-group-item-action" href="#list-pat" id="list-pat-list"  role="tab" data-toggle="list" aria-controls="home">Patient List</a>
+
+      <a class="list-group-item list-group-item-action" href="#list-nl" id="list-nl-list"  role="tab" data-toggle="list" aria-controls="home">Nurse List</a>
+
       <a class="list-group-item list-group-item-action" href="#list-app" id="list-app-list"  role="tab" data-toggle="list" aria-controls="home">Appointment Details</a>
       <a class="list-group-item list-group-item-action" href="#list-pres" id="list-pres-list"  role="tab" data-toggle="list" aria-controls="home">Prescription List</a>
       <a class="list-group-item list-group-item-action" href="#list-settings" id="list-adoc-list"  role="tab" data-toggle="list" aria-controls="home">Add Doctor</a>
       <a class="list-group-item list-group-item-action" href="#list-settings1" id="list-ddoc-list"  role="tab" data-toggle="list" aria-controls="home">Delete Doctor</a>
 
       <a class="list-group-item list-group-item-action" href="#list-nur" id="list-nur-list"  role="tab" data-toggle="list" aria-controls="home">Add Nurse</a>
-
+      <a class="list-group-item list-group-item-action" href="#list-dnur" id="list-dnur-list"  role="tab" data-toggle="list" aria-controls="home">Delete Nurse</a>
+    
+      <a class="list-group-item list-group-item-action" href="#list-ins" id="list-ins-list"  role="tab" data-toggle="list" aria-controls="home">Insurance</a>
       <a class="list-group-item list-group-item-action" href="#list-mes" id="list-mes-list"  role="tab" data-toggle="list" aria-controls="home">Queries</a>
       <a class="list-group-item list-group-item-action" href="#list-amb" id="list-amb-list"  role="tab" data-toggle="list" aria-controls="home">Ambulance</a>
     </div><br>
@@ -348,7 +369,7 @@ if(isset($_POST['docsub1']))
                     <th scope="col">Gender</th>
                     <th scope="col">Email</th>
                     <th scope="col">Contact</th>
-                    <th scope="col">Password</th>
+                    <!-- <th scope="col">Password</th> -->
                   </tr>
                 </thead>
                 <tbody>
@@ -364,7 +385,7 @@ if(isset($_POST['docsub1']))
                       $gender = $row['gender'];
                       $email = $row['email'];
                       $contact = $row['contact'];
-                      $password = $row['password'];
+                  
                       
                       echo "<tr>
                         <td>$pid</td>
@@ -373,7 +394,69 @@ if(isset($_POST['docsub1']))
                         <td>$gender</td>
                         <td>$email</td>
                         <td>$contact</td>
-                        <td>$password</td>
+                   
+                      </tr>";
+                    }
+
+                  ?>
+                </tbody>
+              </table>
+        <br>
+      </div>
+
+
+          <!-- Nurse-list -->
+
+
+      <div class="tab-pane fade" id="list-nl" role="tabpanel" aria-labelledby="list-nl-list">
+              
+
+              <div class="col-md-8">
+      <!-- <form class="form-group" action="doctorsearch.php" method="post">
+        <div class="row">
+        <div class="col-md-10"><input type="text" name="doctor_contact" placeholder="Enter Doctor ID" class = "form-control"></div>
+        <div class="col-md-2"><input type="submit" name="doctor_search_submit" class="btn btn-primary" value="Search"></div></div> -->
+      <!-- </form> -->
+    </div>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                  <th scope="col">Nurse ID</th>
+                    <th scope="col">Nurse Name</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Shift</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Salary</th>
+                    <!-- <th scope="col">Age</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Password</th> -->
+                   
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php 
+                    $con=mysqli_connect("localhost","root","","myhmsdb");
+                    global $con;
+                    $query = "select * from nurse";
+                    $result = mysqli_query($con,$query);
+                    while ($row = mysqli_fetch_array($result)){
+                      $nid=$row['nid'];
+                      $name= $row['name'];
+                      $age= $row['age'];
+                      $shift = $row['shift'];
+                      $email = $row['email'];
+                      // $password = $row['password'];
+                      $salary = $row['salary'];
+                      
+                      echo "<tr>
+                      <td>$nid</td>
+                        <td>$name</td>
+                        <td>$age</td>
+                        <td>$shift</td>
+                        <td>$email</td>
+                      
+                        <td>$salary</td>
                       </tr>";
                     }
 
@@ -622,9 +705,68 @@ if(isset($_POST['docsub1']))
       </div>
 
 
+      <!-- delete nurse -->
+         
+            
+      <div class="tab-pane fade" id="list-dnur" role="tabpanel" aria-labelledby="list-dnur-list">
+        <form class="form-group" method="post" action="admin-panel1.php">
+          <div class="row">
+          
+                  <div class="col-md-4"><label>Email ID:</label></div>
+                  <div class="col-md-8"><input type="email"  class="form-control" name="email" required></div><br><br>
+                  
+                </div>
+          <input type="submit" name="nursub1" value="Delete Nurse" class="btn btn-primary" onclick="confirm('do you really want to delete?')">
+        </form>
+      </div>
 
 
-       
+
+         <!-- Insurance -->
+
+
+
+         <div class="tab-pane fade" id="list-ins" role="tabpanel" aria-labelledby="list-ins-list">
+        <form class="form-group" method="post" action="insurance.php">
+          <div class="row">
+                  <div class="col-md-4"><label>Patient id:</label></div>
+                  <div class="col-md-8"><input type="text" class="form-control" name="pid"  required></div><br><br>
+
+                  <div class="col-md-4"><label>Policy No:</label></div>  
+
+                <div class="col-md-8"><input type="text"  class="form-control" name="policy_no" required></div><br><br>
+                    
+                <div class="col-md-4"><label>Insurance Type :</label></div>
+                <div class="col-md-8">
+                   <select name="ins_type" class="form-control" id="special" required="required">
+                      <option value="head" name="" disabled selected>Select Type</option>
+                      <option value="Individual" name="">Individual</option>
+                      <option value="Floating" name="">Floating</option>
+                      
+                    </select>
+                    </div><br><br>
+                     
+                    <div class="col-md-4"><label>Company :</label></div>
+                <div class="col-md-8">
+                   <select name="company" class="form-control" id="special" required="required">
+                      <option value="head" name="" disabled selected>Select Type</option>
+                      <option value="Apollo Munich Health Insurance Company Limited " name="">Apollo Munich Health Insurance Company Limited </option>
+                      <option value="Star Health & Allied Insurance Company Limited" name="">Star Health & Allied Insurance Company Limited </option>
+                      <option value="Max Bupa Health Insurance Company Limited " name="">Max Bupa Health Insurance Company Limited </option>
+                      <option value="ICICI Lombard General Insurance Company Limited" name="">ICICI Lombard General Insurance Company Limited </option>
+                      
+                    </select>
+                    </div><br><br>
+                 
+
+
+
+                      </div>
+          <input type="submit" name="inssub" value="Add Insurance" class="btn btn-primary">
+        </form>
+      </div>
+
+        <!-- queries -->
 
        <div class="tab-pane fade" id="list-mes" role="tabpanel" aria-labelledby="list-mes-list">
 
@@ -635,7 +777,7 @@ if(isset($_POST['docsub1']))
         <div class="col-md-2"><input type="submit" name="mes_search_submit" class="btn btn-primary" value="Search"></div></div>
       </form>
     </div>
-        <!-- queries -->
+       
               <table class="table table-hover">
                 <thead>
                   <tr>
