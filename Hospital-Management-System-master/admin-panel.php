@@ -77,14 +77,14 @@ if(isset($_GET['cancel']))
 
 
 
-
+//bill
 
 function generate_bill(){
   $con=mysqli_connect("localhost","root","","myhmsdb");
   $pid = $_SESSION['pid'];
   $output='';
   $query=mysqli_query($con,"select p.pid,p.ID,p.fname,p.lname,p.doctor,p.appdate,p.apptime,p.disease,p.allergy,p.prescription,a.docFees from prestb p inner join appointmenttb a on p.ID=a.ID and p.pid = '$pid' and p.ID = '".$_GET['ID']."'");
-  while($row = mysqli_fetch_array($query)){
+  while($row = mysqli_fetch_array($query)){ 
     $output .= '
     <label> Patient ID : </label>'.$row["pid"].'<br/><br/>
     <label> Appointment ID : </label>'.$row["ID"].'<br/><br/>
@@ -126,7 +126,7 @@ if(isset($_GET["generate_bill"])){
 
   $content .= '
       <br/>
-      <h2 align ="center"> Global Hospitals</h2></br>
+      <h2 align ="center"> G13 Hospitals</h2></br>
       <h3 align ="center"> Bill</h3>
       
 

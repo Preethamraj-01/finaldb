@@ -369,6 +369,8 @@ if(isset($_POST['nursub1']))
                     <th scope="col">Gender</th>
                     <th scope="col">Email</th>
                     <th scope="col">Contact</th>
+                    <th scope="col">Blood Group</th>
+                    <th scope="col">Address</th>
                     <!-- <th scope="col">Password</th> -->
                   </tr>
                 </thead>
@@ -385,6 +387,8 @@ if(isset($_POST['nursub1']))
                       $gender = $row['gender'];
                       $email = $row['email'];
                       $contact = $row['contact'];
+                      $blood = $row['blood'];
+                      $address = $row['address'];
                   
                       
                       echo "<tr>
@@ -394,6 +398,8 @@ if(isset($_POST['nursub1']))
                         <td>$gender</td>
                         <td>$email</td>
                         <td>$contact</td>
+                        <td>$blood</td>
+                        <td>$address</td>
                    
                       </tr>";
                     }

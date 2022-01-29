@@ -10,11 +10,14 @@
 include("newfunc.php");
 if(isset($_POST['patient_search_submit']))
 {
-	$contact=$_POST['patient_contact'];
-	$query = "select * from patreg where pid= '$contact'";
+	// $contact=$_POST['patient_contact'];
+	// $query = "select * from patreg where pid=$contact ";//mod
+
+  $query="select p.fname,p.lname,p.email,p.contact,p.password,p.blood,p.address,b.policy_no,a.ID from patreg p,insurance b,appointmenttb a where p.pid=b.pid and p.pid=a.pid   ;
+
   $result = mysqli_query($con,$query);
   $row=mysqli_fetch_array($result);
-  if($row['lname']=="" & $row['email']=="" & $row['contact']=="" & $row['password']==""){
+  if( $row['fname']=="" & $row['lname']=="" & $row['email']=="" & $row['contact']=="" & $row['password']==""  & $row['blood']==""  & $row['address']==""  & $row['policy_no']==""  & $row['ID']=="" ){
     echo "<script> alert('No entries found! Please enter valid details'); 
           window.location.href = 'admin-panel1.php#list-doc';</script>";
   }
@@ -29,7 +32,12 @@ if(isset($_POST['patient_search_submit']))
       <th scope='col'>Last Name</th>
       <th scope='col'>Email</th>
       <th scope='col'>Contact</th>
-      <th scope='col'>Password</th>
+       <th scope='col'>Password</th>
+       <th scope='col'>Blood Group</th>
+       <th scope='col'>Address</th>
+       <th scope='col'>Policy_no</th>
+       <th scope='col'>Disease</th>
+       <th scope='col'>Prescribed Doc_id</th>
     </tr>
   </thead>
   <tbody>";
@@ -40,12 +48,19 @@ if(isset($_POST['patient_search_submit']))
         $email = $row['email'];
         $contact = $row['contact'];
         $password = $row['password'];
+        $blood = $row['blood'];
+        $address = $row['address'];
+        // $Policy_no = $row['Policy_no'];
         echo "<tr>
           <td>$fname</td>
           <td>$lname</td>
           <td>$email</td>
           <td>$contact</td>
           <td>$password</td>
+          <td>$blood</td>
+          <td>$address</td>
+          
+
         </tr>";
     
 	echo "</tbody></table><center><a href='admin-panel1.php' class='btn btn-light'>Back to dashboard</a></div></center></div></div></div>";
